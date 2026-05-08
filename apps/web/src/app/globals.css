@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark Mode Colors */
+  --color-dark-bg: #0a0a0a;
+  --color-dark-900: #1a1a1a;
+  --color-dark-800: #2a2a2a;
+  --color-dark-700: #3a3a3a;
+  --color-dark-600: #4a4a4a;
+  --color-ember: #ff6b35;
+  --color-ember-light: #ff8c5a;
+  --color-gold: #d4af37;
+  --color-gold-light: #e8c547;
+  --color-crimson: #c82828;
+  --color-ash: #8b8b8b;
+  --color-ash-light: #a9a9a9;
+
+  /* Light Mode Colors */
+  --color-parchment: #f5f1e8;
+  --color-parchment-light: #fdfbf7;
+  --color-warm-gold: #e8d5b7;
+  --color-soft-gold: #d4af37;
+  --color-light-ash: #c9c9c9;
+  --color-warm-gray: #b8b8b8;
+
+  /* Theme */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+* {
+  @apply border-current;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-dark-bg text-ash-light dark:bg-dark-bg dark:text-ash-light;
+  @apply transition-colors duration-300;
+}
+
+html.light body {
+  @apply bg-parchment text-warm-gray;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-ember text-dark-bg;
+}
+
+html.light ::selection {
+  @apply bg-warm-gold text-parchment;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-800;
+}
+
+html.light ::-webkit-scrollbar-track {
+  @apply bg-parchment;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-ember rounded hover:bg-ember-light;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  @apply bg-warm-gold rounded hover:bg-soft-gold;
+}
+
+/* Focus styles */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ember;
+}
+
+html.light :focus-visible {
+  @apply outline-warm-gold;
+}
+
+/* Placeholder styling */
+::placeholder {
+  @apply text-ash opacity-50;
+}
+
+html.light ::placeholder {
+  @apply text-light-ash opacity-50;
+}
+
+/* Form elements */
+input,
+textarea,
+select {
+  @apply font-sans;
+}
+
+button {
+  @apply font-sans cursor-pointer;
+}
+
+/* Link styling */
+a {
+  @apply text-gold hover:text-gold-light;
+}
+
+html.light a {
+  @apply text-warm-gold hover:text-soft-gold;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-gothic font-bold;
+}
+
+/* Utility classes */
+.glass-morphism {
+  @apply bg-dark-800 bg-opacity-40 backdrop-blur-md border border-dark-600 border-opacity-30;
+}
+
+html.light .glass-morphism {
+  @apply bg-parchment bg-opacity-40 backdrop-blur-md border border-warm-gold border-opacity-20;
+}
+
+.ember-glow {
+  @apply shadow-ember-glow;
+}
+
+.ember-glow-lg {
+  @apply shadow-ember-glow-lg;
+}
+
+html.light .ember-glow,
+html.light .ember-glow-lg {
+  @apply shadow-none;
+}
+
+.gold-glow {
+  @apply shadow-gold-glow;
+}
+
+html.light .gold-glow {
+  @apply shadow-none;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-ember to-gold bg-clip-text text-transparent;
+}
+
+html.light .gradient-text {
+  @apply bg-gradient-to-r from-warm-gold to-soft-gold;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Loading skeleton */
+.skeleton {
+  @apply animate-pulse bg-dark-700;
+}
+
+html.light .skeleton {
+  @apply bg-warm-gold bg-opacity-20;
+}
+
+/* Custom scrolling area */
+.custom-scrollbar {
+  @apply overflow-y-auto;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-ash rounded-full hover:bg-ash-light;
+}
+
+html.light .custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-light-ash hover:bg-warm-gold;
+}
+
+/* Overlay */
+.overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40;
+}
+
+/* Container padding */
+.container-px {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+/* Typography */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Responsive grid */
+.grid-auto {
+  @apply grid auto-cols-max gap-4;
+}
+
+/* Safe area */
+.safe-area {
+  padding-left: max(0px, env(safe-area-inset-left));
+  padding-right: max(0px, env(safe-area-inset-right));
+  padding-top: max(0px, env(safe-area-inset-top));
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
+}

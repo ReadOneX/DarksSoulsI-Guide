@@ -1,0 +1,19 @@
+{
+  "name": "@darks-souls/api",
+  "version": "1.0.0",
+  "description": "REST API client and utilities",
+  "private": true,
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./client": "./client/index.ts",
+    "./endpoints": "./endpoints/index.ts"
+  },
+  "dependencies": {
+    "@darks-souls/types": "file:../types",
+    "@darks-souls/shared": "file:../shared"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
