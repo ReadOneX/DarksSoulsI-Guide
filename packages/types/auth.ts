@@ -5,6 +5,10 @@ export interface AuthTokens {
   expiresIn: number;
 }
 
+export interface AuthSession extends AuthTokens {
+  user: AuthUser;
+}
+
 export interface AuthUser {
   id: string;
   username: string;
@@ -14,6 +18,7 @@ export interface AuthUser {
   updatedAt: string;
   role: 'user' | 'admin' | 'moderator';
   isGuest?: boolean;
+  subscriptionTier: 'guest' | 'registered' | 'premium';
 }
 
 export interface LoginRequest {
@@ -47,4 +52,24 @@ export interface JWTPayload {
   iat: number;
   exp: number;
   type: 'access' | 'refresh';
+}
+
+export interface UserPreferences {
+  theme: 'dark' | 'light' | 'auto';
+  language: string;
+  notifications: NotificationPreferences;
+  privacy: PrivacySettings;
+}
+
+export interface NotificationPreferences {
+  enabled: boolean;
+  pushNotifications: boolean;
+  emailNotifications: boolean;
+  types: string[];
+}
+
+export interface PrivacySettings {
+  profileVisibility: 'public' | 'friends' | 'private';
+  shareProgress: boolean;
+  shareAchievements: boolean;
 }

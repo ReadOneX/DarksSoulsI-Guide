@@ -8,11 +8,14 @@ node_modules
 
 # Next.js
 /.next
+**/.next
 /out
 
 # Production
 /build
 /dist
+**/dist
+*.tsbuildinfo
 
 # Misc
 .DS_Store

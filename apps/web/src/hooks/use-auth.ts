@@ -24,16 +24,17 @@ export function useAuth(): UseAuthReturn {
       try {
         const response = await authAPI.login(credentials);
         if (response.success && response.data) {
-          setTokens(response.data);
+          const { user: sessionUser, ...sessionTokens } = response.data;
+          setUser(sessionUser);
+          setTokens(sessionTokens);
           setAuthenticated(true);
-          // TODO: Fetch current user
         }
       } catch (error) {
         console.error('Login error:', error);
         throw error;
       }
     },
-    [setTokens, setAuthenticated]
+    [setUser, setTokens, setAuthenticated]
   );
 
   const register = useCallback(
@@ -41,7 +42,9 @@ export function useAuth(): UseAuthReturn {
       try {
         const response = await authAPI.register(data);
         if (response.success && response.data) {
-          setTokens(response.data);
+          const { user: sessionUser, ...sessionTokens } = response.data;
+          setUser(sessionUser);
+          setTokens(sessionTokens);
           setAuthenticated(true);
         }
       } catch (error) {
@@ -49,7 +52,7 @@ export function useAuth(): UseAuthReturn {
         throw error;
       }
     },
-    [setTokens, setAuthenticated]
+    [setUser, setTokens, setAuthenticated]
   );
 
   const handleLogout = useCallback(async () => {

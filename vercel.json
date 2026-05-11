@@ -1,22 +1,14 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "apps/web/package.json",
-      "use": "@vercel/next@latest"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "destination": "http://localhost:3001/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "apps/web/$1"
-    }
-  ],
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build -w apps/web",
+  "devCommand": "npm run dev -w apps/web",
   "env": {
-    "NEXT_PUBLIC_API_URL": "@next_public_api_url"
+    "NEXT_PUBLIC_APP_NAME": "Dark Souls I Guide",
+    "NEXT_PUBLIC_APP_VERSION": "1.0.0",
+    "NEXT_PUBLIC_ENABLE_PWA": "true",
+    "NEXT_PUBLIC_ENABLE_WEB_PUSH": "true",
+    "NEXT_PUBLIC_GUEST_ACCESS_PERCENTAGE": "70"
   }
 }

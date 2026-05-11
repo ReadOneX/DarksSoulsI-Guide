@@ -12,6 +12,11 @@
     "./guide": "./guide.ts",
     "./progress": "./progress.ts"
   },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts"
+  },
   "devDependencies": {
     "typescript": "^5.3.3"
   }

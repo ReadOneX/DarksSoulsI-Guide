@@ -35,11 +35,16 @@ export class ApiClient {
     }
   }
 
-  private getHeaders(token?: string, customHeaders?: HeadersInit): HeadersInit {
-    const headers: HeadersInit = {
+  private getHeaders(token?: string, customHeaders?: HeadersInit): Record<string, string> {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...customHeaders
     };
+
+    if (customHeaders) {
+      new Headers(customHeaders).forEach((value, key) => {
+        headers[key] = value;
+      });
+    }
 
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;

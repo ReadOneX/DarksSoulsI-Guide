@@ -1,6 +1,7 @@
 import { ApiClient } from '../client';
 import {
   AuthTokens,
+  AuthSession,
   LoginRequest,
   RegisterRequest,
   AuthUser,
@@ -21,10 +22,10 @@ const apiClient = new ApiClient();
 // Auth Endpoints
 export const authAPI = {
   login: (credentials: LoginRequest) =>
-    apiClient.post<AuthTokens>('/api/auth/login', credentials),
+    apiClient.post<AuthSession>('/api/auth/login', credentials),
 
   register: (data: RegisterRequest) =>
-    apiClient.post<AuthTokens>('/api/auth/register', data),
+    apiClient.post<AuthSession>('/api/auth/register', data),
 
   logout: (token: string) =>
     apiClient.post<void>('/api/auth/logout', {}, { token }),
@@ -41,8 +42,8 @@ export const authAPI = {
 
 // Guide Endpoints
 export const guideAPI = {
-  getAreas: () =>
-    apiClient.get<PaginatedResponse<Area>>('/api/guides/areas'),
+  getAreas: (page: number = 1, pageSize: number = 20) =>
+    apiClient.get<PaginatedResponse<Area>>(`/api/guides/areas?page=${page}&pageSize=${pageSize}`),
 
   getAreaById: (areaId: string) =>
     apiClient.get<Area>(`/api/guides/areas/${areaId}`),

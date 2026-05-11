@@ -1,19 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function LoginPage(): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const { login } = useAuth();
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     setIsLoading(true);
-    // TODO: Implement login logic
-    setTimeout(() => setIsLoading(false), 1000);
+    setMessage('');
+
+    try {
+      const credentials = email.includes('@')
+        ? { email, password }
+        : { username: email, password };
+      await login(credentials);
+      router.push('/dashboard');
+    } catch {
+      setMessage('Login service is unavailable. Start the backend or continue as guest.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -68,9 +84,15 @@ export default function LoginPage(): JSX.Element {
             </button>
           </form>
 
+          {message && (
+            <p className="mt-4 rounded-lg border border-crimson/40 bg-crimson/10 p-3 text-sm text-ash">
+              {message}
+            </p>
+          )}
+
           <div className="mt-8 pt-8 border-t border-dark-600">
             <p className="text-ash text-sm text-center">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/auth/register" className="text-gold hover:text-gold-light font-medium">
                 Create one
               </Link>

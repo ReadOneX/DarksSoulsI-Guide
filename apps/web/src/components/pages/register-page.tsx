@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function RegisterPage(): JSX.Element {
   const [username, setUsername] = useState('');
@@ -10,16 +12,27 @@ export default function RegisterPage(): JSX.Element {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const { register } = useAuth();
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setMessage('Passwords do not match');
       return;
     }
     setIsLoading(true);
-    // TODO: Implement register logic
-    setTimeout(() => setIsLoading(false), 1000);
+    setMessage('');
+
+    try {
+      await register({ username, email, password, confirmPassword });
+      router.push('/dashboard');
+    } catch {
+      setMessage('Registration service is unavailable. Check backend configuration.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -101,6 +114,12 @@ export default function RegisterPage(): JSX.Element {
               {isLoading ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
+
+          {message && (
+            <p className="mt-4 rounded-lg border border-crimson/40 bg-crimson/10 p-3 text-sm text-ash">
+              {message}
+            </p>
+          )}
 
           <div className="mt-8 pt-8 border-t border-dark-600">
             <p className="text-ash text-sm text-center">

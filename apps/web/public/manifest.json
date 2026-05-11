@@ -1,0 +1,19 @@
+{
+  "name": "Dark Souls I Guide",
+  "short_name": "DS Guide",
+  "description": "A hybrid Dark Souls I companion app for guides, builds, progress, and lore.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ff6b35",
+  "orientation": "portrait-primary",
+  "categories": ["games", "utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

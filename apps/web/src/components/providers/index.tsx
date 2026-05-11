@@ -1,8 +1,9 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ClientThemeProvider } from './theme-provider';
 import { QueryProvider } from './query-provider';
+import { PwaProvider } from './pwa-provider';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -11,7 +12,9 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps): JSX.Element {
   return (
     <ClientThemeProvider>
-      <QueryProvider>{children}</QueryProvider>
+      <PwaProvider>
+        <QueryProvider>{children}</QueryProvider>
+      </PwaProvider>
     </ClientThemeProvider>
   );
 }

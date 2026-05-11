@@ -1,6 +1,13 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth';
+import bookmarkRoutes from './routes/bookmarks';
+import guideRoutes from './routes/guides';
+import notificationRoutes from './routes/notifications';
+import progressRoutes from './routes/progress';
+import syncRoutes from './routes/sync';
+import { checkDatabase } from './db/pool';
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +26,13 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/api/auth', authRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
+app.use('/api/guides', guideRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/progress', progressRoutes);
+app.use('/api/sync', syncRoutes);
+
 // Health check
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({
@@ -29,68 +43,11 @@ app.get('/api/health', (req: Request, res: Response) => {
   });
 });
 
-// Auth routes (placeholder)
-app.post('/api/auth/login', (req: Request, res: Response) => {
-  res.json({
-    success: true,
-    data: {
-      accessToken: 'temp-token',
-      refreshToken: 'temp-refresh',
-      expiresIn: 3600
-    },
-    message: 'Login endpoint - implementation pending',
-    timestamp: new Date().toISOString()
-  });
-});
-
-app.post('/api/auth/register', (req: Request, res: Response) => {
-  res.json({
-    success: true,
-    data: {
-      accessToken: 'temp-token',
-      refreshToken: 'temp-refresh',
-      expiresIn: 3600
-    },
-    message: 'Register endpoint - implementation pending',
-    timestamp: new Date().toISOString()
-  });
-});
-
-app.post('/api/auth/logout', (req: Request, res: Response) => {
-  res.json({
-    success: true,
-    message: 'Logout successful',
-    timestamp: new Date().toISOString()
-  });
-});
-
-// Guide routes (placeholder)
-app.get('/api/guides/areas', (req: Request, res: Response) => {
-  res.json({
-    success: true,
-    data: {
-      data: [],
-      total: 0,
-      page: 1,
-      pageSize: 20,
-      totalPages: 0
-    },
-    message: 'Areas endpoint - implementation pending',
-    timestamp: new Date().toISOString()
-  });
-});
-
-app.get('/api/guides/bosses', (req: Request, res: Response) => {
-  res.json({
-    success: true,
-    data: {
-      data: [],
-      total: 0,
-      page: 1,
-      pageSize: 20,
-      totalPages: 0
-    },
-    message: 'Bosses endpoint - implementation pending',
+app.get('/api/health/db', async (req: Request, res: Response) => {
+  const database = await checkDatabase();
+  res.status(database.ok ? 200 : 503).json({
+    success: database.ok,
+    data: database,
     timestamp: new Date().toISOString()
   });
 });
@@ -106,7 +63,7 @@ app.use((req: Request, res: Response) => {
 });
 
 // Error handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
   res.status(500).json({
     success: false,

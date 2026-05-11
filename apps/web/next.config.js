@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'
   },
@@ -19,19 +18,10 @@ const nextConfig = {
     ]
   },
   experimental: {
-    appDir: true
+    optimizePackageImports: ['@darks-souls/types', '@darks-souls/shared', '@darks-souls/api', '@darks-souls/ui'],
   },
   typescript: {
     tsconfigPath: './tsconfig.json'
-  },
-  eslint: {
-    dirs: ['src']
-  },
-  publicRuntimeConfig: {
-    apiUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
-  },
-  serverRuntimeConfig: {
-    apiUrl: process.env.API_URL || 'http://localhost:3001'
   },
   headers: async () => {
     return [
