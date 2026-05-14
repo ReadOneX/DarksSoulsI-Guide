@@ -28,10 +28,11 @@ export function useAuth(): UseAuthReturn {
           setUser(sessionUser);
           setTokens(sessionTokens);
           setAuthenticated(true);
+        } else if (response.error) {
+          throw new Error(response.error || 'Login failed');
         }
       } catch (error) {
-        console.error('Login error:', error);
-        throw error;
+        throw error instanceof Error ? error : new Error('Login failed');
       }
     },
     [setUser, setTokens, setAuthenticated]
@@ -46,10 +47,11 @@ export function useAuth(): UseAuthReturn {
           setUser(sessionUser);
           setTokens(sessionTokens);
           setAuthenticated(true);
+        } else if (response.error) {
+          throw new Error(response.error || 'Registration failed');
         }
       } catch (error) {
-        console.error('Register error:', error);
-        throw error;
+        throw error instanceof Error ? error : new Error('Registration failed');
       }
     },
     [setUser, setTokens, setAuthenticated]
@@ -60,11 +62,11 @@ export function useAuth(): UseAuthReturn {
       if (tokens?.accessToken) {
         await authAPI.logout(tokens.accessToken);
       }
+    } catch (error) {
+      // Silent fail on logout API error, still clear local state
+    } finally {
       logout();
       setUser(null);
-    } catch (error) {
-      console.error('Logout error:', error);
-      logout();
     }
   }, [tokens, logout, setUser]);
 

@@ -5,9 +5,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tauri dev",
+    "dev": "vite",
+    "dev:tauri": "tauri dev",
     "build": "vite build",
-    "tauri:build": "tauri build --config src-tauri/tauri.conf.json",
+    "tauri": "tauri",
+    "tauri:build": "tauri build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx"
